@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: person-service
+  namespace: person-service-namespace
 spec:
   replicas: 2
   selector:
