@@ -8,6 +8,8 @@ spec:
   sourceRepos:
     - '*'
   destinations:
+    - namespace: argocd
+      server: https://kubernetes.default.svc
     - namespace: person-service-namespace
       server: https://kubernetes.default.svc
   clusterResourceWhitelist:
