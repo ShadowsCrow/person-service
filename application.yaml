@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: person-service
+  namespace: argocd  # Namespace onde o Argo CD está rodando
+spec:
+  project: default
+  source:
+    repoURL: 'git@github.com:ShadowsCrow/person-service.git'
+    targetRevision: HEAD
+    path: manifests  # Aponta para a pasta "manifests" dentro do repositório
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: person-service-namespace  # Namespace onde a aplicação será implantada
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

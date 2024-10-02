@@ -12,14 +12,14 @@ import java.util.Arrays;
 @Configuration
 public class PrometheusMetricsConfig {
 
-    // // Lista de métricas que você deseja manter
-    // private final List<String> metricsToKeep = Arrays.asList("http.server.requests", "evento_valor_metric");
+    // Lista de métricas que você deseja manter
+    private final List<String> metricsToKeep = Arrays.asList("http.server.requests", "evento_valor_metric");
 
-    // // Define o customizador de registries que aplica o filtro
-    // @Bean
-    // public MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
-    //     return registry -> registry.config().meterFilter(MeterFilter.denyUnless(id -> {
-    //         return metricsToKeep.contains(id.getName());
-    //     }));
-    // }
+    // Define o customizador de registries que aplica o filtro
+    @Bean
+    public MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
+        return registry -> registry.config().meterFilter(MeterFilter.denyUnless(id -> {
+            return metricsToKeep.contains(id.getName());
+        }));
+    }
 }
