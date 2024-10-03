@@ -19,7 +19,9 @@ public class PrometheusMetricsConfig {
     @Bean
     public MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
         return registry -> registry.config().meterFilter(MeterFilter.denyUnless(id -> {
-            return metricsToKeep.contains(id.getName());
+            boolean keepMetric = metricsToKeep.contains(id.getName());
+            System.out.println("Filtering metric: " + id.getName() + " - " + (keepMetric ? "Allowed" : "Denied"));
+            return keepMetric;
         }));
     }
 }
