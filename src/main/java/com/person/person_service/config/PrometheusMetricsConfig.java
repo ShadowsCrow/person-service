@@ -15,6 +15,10 @@ public class PrometheusMetricsConfig {
     // Lista de métricas que você deseja manter
     private final List<String> metricsToKeep = Arrays.asList("http.server.requests", "evento_valor_metric");
 
+    public PrometheusMetricsConfig() {
+        System.out.println("PrometheusMetricsConfig loaded.");
+    }
+
     // Define o customizador de registries que aplica o filtro
     @Bean
     public MeterRegistryCustomizer<MeterRegistry> meterRegistryCustomizer() {
