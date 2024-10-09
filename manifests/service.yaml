@@ -11,6 +11,5 @@ spec:
     - protocol: TCP
       port: 80           # Porta externa (do serviço)
       targetPort: 8080    # Porta do contêiner (onde sua aplicação está rodando)
-      nodePort: 31396     # Define o NodePort explicitamente
   type: NodePort
 

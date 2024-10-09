@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: person-service
-        image: person-service:v2  # Usando a imagem que você carregou no kind
+        image: person-service:v3  # Usando a imagem que você carregou no kind
         imagePullPolicy: Never         # Certifique-se de que o Kubernetes não vai tentar puxar a imagem da internet
         ports:
         - containerPort: 8080
