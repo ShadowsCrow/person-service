@@ -28,5 +28,7 @@ private String titulo;
 private String descricao;
 @NonNull
 private Integer valor;
+@NonNull
+private Integer teste;
 
 }
