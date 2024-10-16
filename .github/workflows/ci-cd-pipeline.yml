@@ -47,13 +47,25 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v2
 
+    # Instalar o kubectl
+    - name: Install kubectl
+      run: |
+        curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
+
     # Instalar o ArgoCD CLI
     - name: Install ArgoCD CLI
       run: curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.11/argocd-linux-amd64 && chmod +x /usr/local/bin/argocd
 
+    # Fazer o port-forward para o ArgoCD server
+    - name: Port-forward ArgoCD server
+      run: |
+        nohup kubectl port-forward svc/argocd-server -n argocd 8082:443 &
+
     # Fazer login no ArgoCD
     - name: Login to ArgoCD
-      run: argocd login ${{ secrets.ARGOCD_SERVER }} --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+      run: argocd login localhost:8082 --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
 
     # Atualizar a imagem da aplicação no ArgoCD
     - name: Update ArgoCD app
