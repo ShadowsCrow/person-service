@@ -1,0 +1,42 @@
+# Namespace para o kube-state-metrics
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+
+---
+# Deployment do kube-state-metrics
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-state-metrics
+  template:
+    metadata:
+      labels:
+        app: kube-state-metrics
+    spec:
+      containers:
+      - name: kube-state-metrics
+        image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.0.0
+        ports:
+        - containerPort: 8080
+
+---
+# Service para o kube-state-metrics
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-state-metrics
+  namespace: monitoring
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: kube-state-metrics
