@@ -63,6 +63,10 @@ jobs:
       run: |
         nohup kubectl port-forward svc/argocd-server -n argocd 8082:443 &
 
+    # Adicionar uma pausa para garantir que o port-forward está ativo antes de tentar login
+    - name: Wait for port-forward
+      run: sleep 10
+
     # Fazer login no ArgoCD
     - name: Login to ArgoCD
       run: argocd login localhost:8082 --username ${{ secrets.ARGOCD_USERNAME }} --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
